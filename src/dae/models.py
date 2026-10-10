@@ -1,6 +1,12 @@
 """Core data models for the DAE MVP."""
 from dataclasses import dataclass, field
 from enum import Enum
+from math import isfinite
+
+
+def _require_finite(name: str, value: float) -> None:
+    if not isfinite(value):
+        raise ValueError(f"{name} must be finite")
 
 
 @dataclass(frozen=True)
@@ -17,6 +23,11 @@ class Task:
     def validate(self) -> None:
         if not self.task_id.strip() or not self.title.strip():
             raise ValueError("task_id and title are required")
+        for name, value in (("expected_revenue", self.expected_revenue),
+                            ("estimated_cost", self.estimated_cost),
+                            ("estimated_hours", self.estimated_hours),
+                            ("confidence", self.confidence), ("risk", self.risk)):
+            _require_finite(name, value)
         for name, value in (("expected_revenue", self.expected_revenue),
                             ("estimated_cost", self.estimated_cost),
                             ("estimated_hours", self.estimated_hours)):
@@ -46,6 +57,12 @@ class SafetyPolicy:
     max_active_agents: int = 3
 
     def validate(self) -> None:
+        for name, value in (("max_cost_per_task", self.max_cost_per_task),
+                            ("max_daily_spend", self.max_daily_spend),
+                            ("min_net_profit", self.min_net_profit),
+                            ("min_confidence", self.min_confidence),
+                            ("max_risk", self.max_risk)):
+            _require_finite(name, value)
         if min(self.max_cost_per_task, self.max_daily_spend, self.min_net_profit) < 0:
             raise ValueError("monetary policy limits cannot be negative")
         if not 0 <= self.min_confidence <= 1 or not 0 <= self.max_risk <= 1:
@@ -61,6 +78,8 @@ class AgentResult:
     verified: bool = True
 
     def __post_init__(self) -> None:
+        _require_finite("revenue", self.revenue)
+        _require_finite("cost", self.cost)
         if self.revenue < 0 or self.cost < 0:
             raise ValueError("revenue and cost cannot be negative")
 
