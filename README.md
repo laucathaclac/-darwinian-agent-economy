@@ -59,3 +59,8 @@ Scores prioritize candidates; they do not guarantee income. A passing test suite
 - [ ] Read-only task-source adapters
 - [ ] Durable event log and CSV report export
 - [ ] Sandboxed task execution after threat modelling and explicit approval
+
+
+## Campaign readiness
+
+See [Set and Earn readiness and evidence checklist](docs/SET_AND_EARN_READINESS.md) for the official requirements, current implementation status, and evidence log. Eligibility must be checked before participation; the official campaign requires participants to be 18 or over.
