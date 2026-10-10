@@ -75,3 +75,14 @@ def test_ledger_rejects_verified_revenue_without_evidence(tmp_path):
     ledger = Ledger(tmp_path / "ledger.sqlite")
     with pytest.raises(ValueError):
         ledger.record("revenue", "task1", 10, verified=True)
+
+
+@pytest.mark.parametrize("kwargs", [
+    {"risk_haircut": 1.1},
+    {"risk_haircut": float("nan")},
+    {"minimum_margin": 1.1},
+    {"minimum_net_value": float("inf")},
+])
+def test_evaluation_rejects_invalid_thresholds(kwargs):
+    with pytest.raises(ValueError):
+        evaluate(op(), **kwargs)
