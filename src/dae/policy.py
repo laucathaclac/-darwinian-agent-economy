@@ -1,4 +1,5 @@
 """Fail-closed policy checks. This module never executes tasks."""
+from math import isfinite
 from .models import SafetyPolicy, Task
 
 
@@ -6,8 +7,8 @@ def task_rejection_reasons(task: Task, policy: SafetyPolicy,
                            spent_today: float = 0.0) -> list[str]:
     policy.validate()
     task.validate()
-    if spent_today < 0:
-        raise ValueError("spent_today cannot be negative")
+    if not isfinite(spent_today) or spent_today < 0:
+        raise ValueError("spent_today must be finite and non-negative")
     reasons: list[str] = []
     if task.estimated_cost > policy.max_cost_per_task:
         reasons.append("estimated cost exceeds per-task limit")
