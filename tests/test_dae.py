@@ -1,4 +1,5 @@
 import unittest
+from math import inf, nan
 
 from dae.evolution import evaluate_agent
 from dae.models import AgentHistory, AgentResult, EvolutionAction, SafetyPolicy, Task
@@ -8,14 +9,21 @@ from dae.scoring import score_task
 
 class ScoringTests(unittest.TestCase):
     def test_score_is_bounded(self):
-        task = Task("a", "Good task", 20, 2, 1, 0.9, 0.1)
-        result = score_task(task)
+        result = score_task(Task("a", "Good task", 20, 2, 1, 0.9, 0.1))
         self.assertGreaterEqual(result.score, 0)
         self.assertLessEqual(result.score, 100)
 
     def test_invalid_confidence_rejected(self):
         with self.assertRaises(ValueError):
             score_task(Task("a", "Bad", 20, 2, 1, 1.5, 0.1))
+
+    def test_nan_revenue_rejected(self):
+        with self.assertRaises(ValueError):
+            score_task(Task("a", "NaN input", nan, 1, 1, 0.9, 0.1))
+
+    def test_infinite_risk_rejected(self):
+        with self.assertRaises(ValueError):
+            score_task(Task("a", "Infinite input", 10, 1, 1, 0.9, inf,))
 
 
 class PolicyTests(unittest.TestCase):
@@ -33,6 +41,12 @@ class PolicyTests(unittest.TestCase):
             Task("a", "Over budget", 20, 8, 1, 0.9, 0.1),
             SafetyPolicy(), spent_today=20)
         self.assertTrue(any("daily budget" in reason for reason in reasons))
+
+    def test_nonfinite_daily_spend_rejected(self):
+        with self.assertRaises(ValueError):
+            task_rejection_reasons(
+                Task("a", "Good", 20, 2, 1, 0.9, 0.1),
+                SafetyPolicy(), spent_today=inf)
 
 
 class EvolutionTests(unittest.TestCase):
@@ -57,6 +71,10 @@ class EvolutionTests(unittest.TestCase):
         history = AgentHistory("a", [AgentResult(10, 2) for _ in range(5)])
         action, _ = evaluate_agent(history, active_agents=3, max_active_agents=3)
         self.assertEqual(action, EvolutionAction.CONTINUE)
+
+    def test_nonfinite_result_rejected(self):
+        with self.assertRaises(ValueError):
+            AgentResult(nan, 0)
 
 
 if __name__ == "__main__":
