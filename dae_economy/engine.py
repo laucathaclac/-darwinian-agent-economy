@@ -1,5 +1,4 @@
 """Pure decision logic. No network, wallet, subprocess, or payment side effects."""
-from dataclasses import asdict
 from .models import Evaluation, Opportunity
 
 
@@ -8,11 +7,13 @@ def evaluate(op: Opportunity, *, minimum_net_value: float = 0.25,
              risk_haircut: float = 0.15,
              reject_upfront_payment: bool = True) -> Evaluation:
     """Estimate expected value conservatively; this is a screen, not a guarantee."""
-    for name, value in (("minimum_net_value", minimum_net_value),
-                        ("minimum_margin", minimum_margin),
-                        ("risk_haircut", risk_haircut)):
-        if not 0 <= value <= 1e9:
-            raise ValueError(f"{name} out of range")
+    from math import isfinite
+    if not isfinite(minimum_net_value) or minimum_net_value < 0:
+        raise ValueError("minimum_net_value must be finite and >= 0")
+    if not isfinite(minimum_margin) or not 0 <= minimum_margin <= 1:
+        raise ValueError("minimum_margin must be between 0 and 1")
+    if not isfinite(risk_haircut) or not 0 <= risk_haircut <= 1:
+        raise ValueError("risk_haircut must be between 0 and 1")
     if reject_upfront_payment and op.requires_upfront_payment:
         return Evaluation(op.opportunity_id, 0.0, 0.0, 0.0, 0.0, 0.0,
                           False, "Rejected: opportunity requires upfront payment")
