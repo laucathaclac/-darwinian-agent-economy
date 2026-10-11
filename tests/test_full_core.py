@@ -7,7 +7,7 @@ from dae.economy import EconomicSnapshot
 
 class FullCoreTests(unittest.TestCase):
     def test_low_ev_task_rejected(self):
-        t=Task("low","tiny reward",4,1,1,.75,.2,"demo")
+        t=Task("low","tiny reward",1.5,1,1,.75,.2,"demo")
         self.assertTrue(task_rejection_reasons(t,SafetyPolicy()))
     def test_non_finite_task_rejected(self):
         t=Task("nan","bad number",10,float("nan"),1,.8,.1,"demo")
