@@ -1,6 +1,7 @@
 """SQLite persistence for the DAE simulation ledger; never handles payments."""
 from __future__ import annotations
 import json, math, sqlite3
+from contextlib import contextmanager
 from pathlib import Path
 from datetime import datetime, timezone
 
