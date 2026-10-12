@@ -8,3 +8,5 @@ venv/
 .coverage
 dist/
 build/
+reports/*
+!reports/.gitkeep
