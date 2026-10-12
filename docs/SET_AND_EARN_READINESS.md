@@ -24,7 +24,7 @@ DAE Health Sentinel is a read-only Venus Core Pool liquidation-risk monitor. It 
 |---|---|
 | Public GitHub repo | Available |
 | Monitor API and agent card | Added on feature branch; CI pending |
-| Official Venus Comptroller address verified | Not yet |
+| Official Venus Core Pool Comptroller address found in official docs | Yes; live call still needs testing |
 | Stable public HTTPS endpoint | Not deployed |
 | ERC-8004 registration and ownership | Not completed or verified |
 | Marketplace listing | Not published |
