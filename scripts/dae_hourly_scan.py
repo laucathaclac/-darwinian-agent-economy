@@ -17,7 +17,7 @@ NEGATIVE = re.compile(r'\b(unpaid|no\s+(?:reward|bounty|payment|payout)|not\s+gu
 
 def fetch(query, limit=20):
     params = urlencode({"q": f"is:issue is:open {query}", "per_page": min(100, max(1, limit)), "sort": "updated", "order": "desc"})
-    req = Request(API + "?" + params, headers={"Accept":"application/vnd.github+json","User-Agent":"DAE-hourly-readonly/0.7","X-GitHub-Api-Version":"2022-11-28"}, method="GET")
+    req = Request(API + "?" + params, headers={"Accept":"application/vnd.github+json","User-Agent":"DAE-hourly-readonly/0.8","X-GitHub-Api-Version":"2022-11-28"}, method="GET")
     try:
         with urlopen(req, timeout=12) as response:
             if response.status != 200: raise RuntimeError(f"GitHub HTTP {response.status}")
@@ -83,11 +83,16 @@ def main():
     stamp=datetime.now(timezone.utc).isoformat()
     ids={x["url"] for x in ordered if x["url"]}
     new=[x for x in ordered if x["url"] not in old]
-    report={"schema_version":"0.7","generated_at":stamp,"profile":profile,"results":ordered,"new_count":len(new),"verified_funded_count":0,"warning":"All reward claims remain unverified until a human confirms actual funding. Read-only only; no task accepted, contacted, executed, or submitted."}
+    report={"schema_version":"0.8","generated_at":stamp,"profile":profile,"results":ordered,"new_count":len(new),"verified_funded_count":0,"warning":"All reward claims remain unverified until a human confirms actual funding. Read-only only; no task accepted, contacted, executed, or submitted."}
     (out/"hourly_latest.json").write_text(json.dumps(report,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
     (out/"hourly_new_leads.json").write_text(json.dumps({"generated_at":stamp,"new_count":len(new),"results":new},indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
-    (out/"hourly_seen.json").write_text(json.dumps({"updated_at":stamp,"seen":sorted(old|ids)[-5000:]},indent=2)+"\n",encoding="utf-8")
-    with (out/"hourly.log").open("a",encoding="utf-8") as f: f.write(f"{stamp} results={len(ordered)} new={len(new)} verified_funded=0\n")
+    (out/"hourly_seen.json").write_text(json.dumps({"updated_at":stamp,"seen":sorted(old|ids)[-5000:]},indent=2),encoding="utf-8")
+    try:
+        with (out/"hourly.log").open("a",encoding="utf-8") as f:
+            f.write(f"{stamp} results={len(ordered)} new={len(new)} verified_funded=0\n")
+    except OSError as exc:
+        # Reports are the primary output; a locked log must not invalidate them.
+        print(f"Warning: could not append hourly.log: {exc}",file=sys.stderr)
     print(f"DAE read-only scan: results={len(ordered)} new={len(new)} verified_funded=0")
     print(f"Reports: {out/'hourly_latest.json'} and {out/'hourly_new_leads.json'}")
     return 0
