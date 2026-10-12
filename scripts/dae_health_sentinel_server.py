@@ -58,6 +58,6 @@ class Handler(BaseHTTPRequestHandler):
         print("%s - %s" % (self.log_date_time_string(),format % args))
 
 if __name__ == "__main__":
-    host, port = os.getenv("DAE_HOST","127.0.0.1"), int(os.getenv("DAE_PORT","8787"))
+    host, port = os.getenv("DAE_HOST","127.0.0.1"), int(os.getenv("PORT", os.getenv("DAE_PORT","8787")) )
     print(f"DAE Health Sentinel listening on http://{host}:{port} (read-only)")
     ThreadingHTTPServer((host,port),Handler).serve_forever()
