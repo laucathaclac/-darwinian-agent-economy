@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: dae-health-sentinel
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: AGENT_PUBLIC_URL
+        value: https://dae-health-sentinel.onrender.com
+      - key: DAE_HOST
+        value: 0.0.0.0
+      - key: VENUS_COMPTROLLER_ADDRESS
+        value: 0xfD36E2c2a6789Db23113685031d7F16329158384

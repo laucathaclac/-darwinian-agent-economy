@@ -51,6 +51,12 @@ dae demo
 
 DAE is read-only by default. It does not trade, transfer assets, sign wallet transactions, spend money, create accounts, contact clients, accept tasks, submit work, or execute third-party code. Hourly scheduling is optional and must be enabled by the user; it is not enabled automatically.
 
+## Set and Earn agent build — Health Sentinel
+
+The active agent prototype is **DAE Health Sentinel**, a read-only Venus Core Pool liquidation-risk monitor for BNB Smart Chain. It exposes a JSON capability card, a health endpoint, and a monitor API. It reports Venus liquidity buffer and shortfall, **not an exact health-factor ratio**. See [Health Sentinel docs](docs/HEALTH_SENTINEL.md).
+
+This is an MVP, not campaign-complete: official contract configuration, a stable public HTTPS deployment, ERC-8004 registration, marketplace listing, independent hires, and qualifying on-chain actions still require real evidence. Do not claim otherwise.
+
 ## Quality and release status
 
 See:
