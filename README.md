@@ -74,3 +74,8 @@ py -3 -m dae.cli demo
 ```
 
 No paid APIs or third-party Python runtime packages are required by the current scanner scripts. Public endpoints may rate-limit or change; failures should be treated as incomplete discovery, not as proof that no opportunities exist.
+
+
+## BNB Chain wallet console (testnet only)
+
+A browser-side test console is available at [`wallet-console/index.html`](wallet-console/index.html). It uses an injected EIP-1193 wallet provider, checks BSC Testnet chain ID 97, reads native balance, estimates gas, and allows only user-approved native testnet transfers capped at 0.001 tBNB. It refuses mainnet and does not request or store seed phrases/private keys. Open the page in a browser where the wallet injects a provider; if the wallet does not inject one, use its official dApp connection method rather than entering secrets.
