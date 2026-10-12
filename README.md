@@ -64,3 +64,9 @@ Scores prioritize candidates; they do not guarantee income. A passing test suite
 ## Campaign readiness
 
 See [Set and Earn readiness and evidence checklist](docs/SET_AND_EARN_READINESS.md) for the official requirements, current implementation status, and evidence log. Eligibility must be checked before participation; the official campaign requires participants to be 18 or over.
+
+
+## v0.6 consolidation branch
+This branch adds a simulation-only SQLite ledger (dae.store.Store), an economic snapshot validator, and a fail-closed policy gate for invalid inputs, excessive per-task cost, low confidence, excessive risk, low expected net, or negative risk-adjusted net. The ledger explicitly reports verified cash as zero and never processes payments.
+
+The Task Hunter ZIP distributed with this branch is a self-contained read-only discovery package. Public-source adapter tests are mocked; live API behavior and any payout are not guaranteed. No task acceptance/submission, wallet/signing, spending, trading, or autonomous replication is enabled.
