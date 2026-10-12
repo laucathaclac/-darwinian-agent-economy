@@ -13,7 +13,7 @@ QUERIES = {
 }
 MONEY = re.compile(r'(?<!\w)\$\s*([0-9][0-9,]*(?:\.\d{1,2})?)\b|\bUSD\s*([0-9][0-9,]*(?:\.\d{1,2})?)\b', re.I)
 POSITIVE = re.compile(r'\b(reward|bounty|paid|payment|compensation|payout|budget)\b', re.I)
-NEGATIVE = re.compile(r'\b(unpaid|no\s+(?:reward|bounty|payment|payout)|not\s+guaranteed|pay\s+to\s+apply|upfront\s+fee)\b', re.I)
+NEGATIVE = re.compile(r'\b(unpaid|no\s+(?:reward|bounty|payment|payout)|not\s+guaranteed|pay\s+to\s+apply|upfront\s+fee|seed\s+phrase|private\s+key|connect\s+(?:your\s+)?wallet|deposit\s+first|send\s+crypto\s+first)\b', re.I)
 
 def fetch(query, limit=20):
     params = urlencode({"q": f"is:issue is:open {query}", "per_page": min(100, max(1, limit)), "sort": "updated", "order": "desc"})
