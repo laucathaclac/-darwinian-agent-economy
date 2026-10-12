@@ -29,14 +29,14 @@ def main():
     out = Path(os.environ.get("DAE_REPORT_DIR", "reports"))
     out.mkdir(parents=True, exist_ok=True)
     report = build_report()
-    (out / "external_source_searches.json").write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\\n", encoding="utf-8")
+    (out / "external_source_searches.json").write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     lines = ["# DAE v0.9 — External Opportunity Discovery", "", f"Generated: {report['generated_at']}", "",
              "**Mode:** free search links only; no paid API calls and no scraping.", "",
              "> These are leads, not verified rewards. Check official funding, terms, deadline, acceptance criteria, age/location eligibility, and payout method. Token prizes are not cash. Never pay to apply or reveal wallet secrets.", ""]
     for i, item in enumerate(report["results"], 1):
         lines.extend([f"## {i}. {item['category']}", f"- Source: {item['source']}", f"- Search: {item['query']}",
                       f"- Why: {item['why']}", f"- Open search: {item['url']}", ""])
-    (out / "external_source_searches.md").write_text("\\n".join(lines), encoding="utf-8")
+    (out / "external_source_searches.md").write_text("\n".join(lines), encoding="utf-8")
     print(f"DAE external discovery links: {len(report['results'])}")
     print("Live offers verified: 0 | Paid API calls: 0")
     print(f"Reports: {out / 'external_source_searches.md'} and {out / 'external_source_searches.json'}")
