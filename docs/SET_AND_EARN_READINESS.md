@@ -1,59 +1,41 @@
-# Set and Earn: DAE readiness and evidence checklist
+# Set and Earn: DAE readiness checklist
 
-Last reviewed: 2026-10-10. Official campaign: [BNB Chain Set and Earn](https://www.bnbchain.org/en/hackathons/smart-money-era-set-and-earn).
+Last reviewed: 2026-10-12. Official rules: https://www.bnbchain.org/en/hackathons/smart-money-era-set-and-earn
 
-## Important eligibility gate
+Campaign window: 1 October 2026 through 5 November 2026 at 12:00 UTC.
 
-The official rules state participants must be **18 or over**. Check eligibility and all location/other restrictions before registering, deploying, paying for hires, or submitting. Do not misstate age or eligibility.
+## Hire track
+- Register campaign wallet before tasks.
+- Hire 3 different agents across at least 2 shortlisted marketplaces.
+- Each hire must emit a qualifying on-chain hire event; approvals alone do not count.
 
-## Official qualifying requirements
-
-Campaign window: **1 October 2026 through 5 November 2026 at 12:00 UTC**. The campaign requires both a hire track and a build track.
-
-### Hire track
-- Register the campaign wallet before completing campaign tasks.
-- Hire at least three different agents across at least two shortlisted marketplaces.
-- Each hire must emit a qualifying on-chain hire event; token approvals alone do not count.
-- Mainnet and testnet hires count under the published rules.
-
-### Build track
-- Register an original agent on the ERC-8004 Identity Registry on BNB Smart Chain mainnet (chain ID 56) or testnet (chain ID 97).
-- The registered campaign wallet must own the agent.
+## Build track
+- Register an original agent on ERC-8004 on BNB Smart Chain chain 56 or 97, owned by the registered campaign wallet.
 - List it on a shortlisted marketplace.
-- Publish a resolvable agent card at its registered domain that describes its purpose and category: yield, grid, rebalancing, or health-factor monitoring.
-- Keep the agent live and responsive to calls.
-- Obtain at least three completed hires from three distinct independent wallets that are not yours and not funded by yours.
-- Perform at least five on-chain actions across at least three separate days; actions must match the agent's stated category.
-- Keep this repository public and show the registry ID and chain once actually verified.
+- Publish a resolvable card at its registered domain and keep it responsive.
+- Get 3 completed hires from 3 independent wallets not owned/funded by the builder.
+- Perform at least 5 real category-consistent on-chain actions across 3 separate days.
+- Keep repository public with verified registry ID and chain.
 
-## Current repository status (honest snapshot)
+## Current product direction
+DAE Health Sentinel is a read-only Venus Core Pool liquidation-risk monitor. It reports account liquidity and shortfall; it does not claim to calculate an exact health-factor ratio. This code is a foundation, not a campaign-complete agent.
 
-| Requirement | Status | Evidence |
-|---|---|---|
-| Public GitHub repository | Implemented | This repository is public |
-| Core scoring and budget policy | Implemented in code | `src/dae/` |
-| Unit tests and GitHub Actions workflow | Configured | `tests/test_dae.py`, `.github/workflows/tests.yml` |
-| Task-source integration | Not implemented | Roadmap |
-| Live hosted agent endpoint/card | Not implemented | No public endpoint registered yet |
-| ERC-8004 registry ID and ownership proof | Not implemented / not verified | No ID claimed |
-| Marketplace listing | Not implemented / not verified | No listing claimed |
-| Three qualifying independent completed hires | Not implemented / not verified | No hire evidence claimed |
-| Five category-consistent on-chain actions across three days | Not implemented / not verified | No transaction evidence claimed |
-| Real revenue | Not established | Current demo is simulation only |
+| Requirement | Status |
+|---|---|
+| Public GitHub repo | Available |
+| Monitor API and agent card | Added on feature branch; CI pending |
+| Official Venus Comptroller address verified | Not yet |
+| Stable public HTTPS endpoint | Not deployed |
+| ERC-8004 registration and ownership | Not completed or verified |
+| Marketplace listing | Not published |
+| 3 independent completed hires for own agent | Not completed |
+| 5 qualifying on-chain actions across 3 days | Not completed |
+| Hire track: 3 agents across 2 marketplaces | Not verified |
+| Real revenue | Not established |
 
-## Evidence log template
+Record only verifiable evidence. Never publish secrets. Do not self-hire or use wallets you fund to simulate independent demand. Participants must be 18+ and satisfy location and other rules.
 
-When a requirement is genuinely completed, add evidence here with:
-- UTC timestamp
-- Network and chain ID
-- Registry ID / marketplace listing URL
-- Transaction hash and explorer URL (where relevant)
-- A short description of what the evidence proves
-- Whether it is testnet or mainnet
-
-Never publish private keys, seed phrases, API secrets, or personal data. Never create circular or self-funded hires to imitate independent usage; the campaign rules explicitly exclude such behavior.
-
-## References
-
-- [Official Set and Earn campaign and rules](https://www.bnbchain.org/en/hackathons/smart-money-era-set-and-earn)
-- [Official BNB Chain announcement](https://www.bnbchain.org/en/blog/set-and-earn-hire-and-build-ai-agents-on-bnb-chain-win)
+Official links:
+- https://www.bnbchain.org/en/hackathons/smart-money-era-set-and-earn
+- https://www.bnbchain.org/en/blog/set-and-earn-hire-and-build-ai-agents-on-bnb-chain-win
+- https://docs-v4.venus.io/technical-reference/reference-isolated-pools/comptroller/comptroller
