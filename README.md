@@ -1,72 +1,76 @@
 # Darwinian Agent Economy (DAE)
 
-A safety-first MVP for discovering candidate tasks, scoring opportunities, simulating outcomes, and deciding whether an agent should continue, pause, or qualify for a human-reviewed replication.
+**DAE is a safety-first, local-first opportunity research and agent-economics prototype.** It combines a deterministic simulation core with read-only public GitHub issue discovery, transparent triage, and search links for other public opportunity ecosystems.
 
-> **Stage:** local simulation and read-only research scaffold. No wallet, private-key, payment, or autonomous spending integration is included.
+> **Current status:** release candidate / research MVP, not a production SaaS. Reward claims are not independently verified. No guaranteed income, autonomous work acceptance, client contact, task execution, wallet signing, payment, or spending is performed.
 
-## Principles
+## Quick start — Windows
 
-- **Earn before expanding:** replication is only considered after repeated, verified positive net results.
-- **Hard limits:** explicit per-task and daily budget caps.
-- **Fail closed:** malformed or incomplete tasks are rejected rather than guessed.
-- **Auditable decisions:** each candidate receives a transparent score and rejection reasons.
-- **Human approval:** replication is a recommendation, never an automatic action.
+1. Download the ZIP from the repository's Releases page (when a release is published) or download the repository source.
+2. Extract to a normal writable folder, e.g. `C:\\DAE`.
+3. Install Python 3.11 or newer from https://www.python.org/downloads/windows/ and enable **Add Python to PATH**.
+4. Double-click `TEST_DAE.bat`; keep the window open and confirm the tests pass.
+5. Double-click `RUN_DAE.bat` to run the read-only scanner, advisor, and external search-link generator.
+6. Open `reports\\hourly_opportunity_brief.md` and `reports\\external_source_searches.md`.
 
-## Requirements
+If the batch files do not run, open CMD in the extracted folder and use:
 
-- Python 3.11+
-- No third-party runtime dependencies
+```bat
+py -3 --version
+py -3 -m unittest discover -s tests -v
+py -3 -m dae.cli demo
+py -3 scripts\\dae_hourly_scan.py
+py -3 scripts\\dae_opportunity_advisor.py
+py -3 scripts\\dae_external_source_discovery.py
+```
 
-## Run on Windows
+Install the local package only if you want the `dae` CLI command:
 
-```powershell
-py -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -e .
+```bat
+py -3 -m pip install -e .
 dae demo
-python -m unittest discover -s tests -v
 ```
 
-Without installing the package:
+## What runs where
 
-```powershell
-$env:PYTHONPATH = "src"
-python -m dae.cli demo
-```
+- `src/dae/`: deterministic task scoring, policy gates, economic simulation and human-reviewed evolution decisions.
+- `scripts/dae_hourly_scan.py`: GET-only search of public GitHub Issues. It creates candidate leads and never accepts or submits a task.
+- `scripts/dae_opportunity_advisor.py`: triage report based on scanner output. It does not independently verify funders, payout terms, or win probability.
+- `scripts/dae_external_source_discovery.py`: generates search links for X, Binance Square via public web search, and broader bounty/grant/hackathon searches. These are **search links, not live crawlers or verified opportunities**.
+- `reports/`: generated local reports; reports are not committed by default.
 
-## Modules
+## Interpreting results
 
-- `dae.models` — task, policy, score and agent history models
-- `dae.scoring` — explainable opportunity scoring
-- `dae.policy` — safety gates and budget checks
-- `dae.evolution` — continue, pause, or replication-review decisions
-- `dae.cli` — deterministic local demo
-
-Scores prioritize candidates; they do not guarantee income. A passing test suite demonstrates code behavior, not market demand or profitability.
+- `UNVERIFIED` means there is no independent proof that a reward is funded.
+- Triage/evidence scores measure information completeness for review. They are **not** probability of winning or being paid.
+- A reward pool paid in tokens is not automatically cash revenue.
+- Check original terms, funder identity, actual funding, acceptance criteria, deadline/timezone, age and location eligibility, payout method, tax, and IP/license terms before investing time.
+- Never pay an upfront fee, send crypto to unlock a reward, disclose a seed phrase/private key, or run untrusted task code.
 
 ## Safety boundaries
 
-- No trading, transfers, wallet signing, or autonomous payments.
-- No automatic task execution or account creation.
-- Third-party task listings are untrusted; verify terms and payout evidence independently.
-- Never commit API keys, seed phrases, private keys, or passwords.
+DAE is read-only by default. It does not trade, transfer assets, sign wallet transactions, spend money, create accounts, contact clients, accept tasks, submit work, or execute third-party code. Hourly scheduling is optional and must be enabled by the user; it is not enabled automatically.
 
-## Roadmap
+## Quality and release status
 
-- [x] Deterministic task scoring and safety policy
-- [x] Simulated agent outcomes and replication review
-- [x] Unit tests for core policy and evolution behavior
-- [ ] Read-only task-source adapters
-- [ ] Durable event log and CSV report export
-- [ ] Sandboxed task execution after threat modelling and explicit approval
+See:
+- [Commercial readiness assessment](docs/COMMERCIAL_READINESS.md)
+- [Hourly scanner documentation](docs/HOURLY_SCAN.md)
+- [Opportunity advisor documentation](docs/OPPORTUNITY_ADVISOR.md)
+- [Multi-source discovery limitations](docs/MULTI_SOURCE_DISCOVERY.md)
+- [Project submission draft](docs/PROJECT_SUBMISSION_DRAFT.md)
+- [Marketplace listing draft](docs/MARKETPLACE_LISTING_DRAFT.md)
+- [Release gate checklist](docs/RELEASE_GATE.md)
+- [Set and Earn readiness checklist](docs/SET_AND_EARN_READINESS.md)
 
+A green CI run confirms the tested code paths on the listed runners; it does not prove market demand, payout reliability, production security, marketplace acceptance, or eligibility for a hackathon. See the official rules before applying. The current Set and Earn readiness notes say participants must be at least 18; do not misrepresent eligibility.
 
-## Campaign readiness
+## Development
 
-See [Set and Earn readiness and evidence checklist](docs/SET_AND_EARN_READINESS.md) for the official requirements, current implementation status, and evidence log. Eligibility must be checked before participation; the official campaign requires participants to be 18 or over.
+```bat
+py -3 -m pip install -e .
+py -3 -m unittest discover -s tests -v
+py -3 -m dae.cli demo
+```
 
-
-## v0.6 consolidation branch
-This branch adds a simulation-only SQLite ledger (dae.store.Store), an economic snapshot validator, and a fail-closed policy gate for invalid inputs, excessive per-task cost, low confidence, excessive risk, low expected net, or negative risk-adjusted net. The ledger explicitly reports verified cash as zero and never processes payments.
-
-The Task Hunter ZIP distributed with this branch is a self-contained read-only discovery package. Public-source adapter tests are mocked; live API behavior and any payout are not guaranteed. No task acceptance/submission, wallet/signing, spending, trading, or autonomous replication is enabled.
+No paid APIs or third-party Python runtime packages are required by the current scanner scripts. Public endpoints may rate-limit or change; failures should be treated as incomplete discovery, not as proof that no opportunities exist.
