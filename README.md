@@ -74,3 +74,16 @@ py -3 -m dae.cli demo
 ```
 
 No paid APIs or third-party Python runtime packages are required by the current scanner scripts. Public endpoints may rate-limit or change; failures should be treated as incomplete discovery, not as proof that no opportunities exist.
+
+
+## BNB Chain integration (testnet, read-only)
+
+DAE now includes an initial **read-only BNB Smart Chain testnet adapter**. It can verify the RPC network/chain ID, read the latest block, and optionally inspect a public address's native BNB balance. It does not sign or broadcast transactions.
+
+```bat
+py -3 scripts\dae_bnb_testnet_check.py
+py -3 scripts\dae_bnb_testnet_check.py --address 0xYourPublicAddress
+py -3 -m unittest discover -s tests -v
+```
+
+The default endpoint is the public BSC testnet RPC (chain ID 97). To use another endpoint, set `DAE_BSC_TESTNET_RPC` or pass `--rpc`. Do not put private keys, seed phrases, or wallet credentials in command-line arguments, source files, or GitHub. Real transaction execution is deliberately not enabled: it requires a separately reviewed signing flow, explicit human approval, transaction simulation, recipient/contract allowlists, and strict spend limits.
