@@ -1,6 +1,10 @@
 """Unit tests for the read-only BAW adapter; no wallet or network required."""
 import json
 import unittest
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from unittest.mock import patch, Mock
 
 from dae.wallet_adapter import WalletAdapter, WalletCLIError
