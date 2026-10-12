@@ -39,7 +39,7 @@ To be set by the marketplace. Do not promise free hosted availability until a st
 https://github.com/laucathaclac/-darwinian-agent-economy
 
 ## Publication blockers
-- Verify and configure the official Venus Core Pool Comptroller/Unitroller address.
+- Verify the official Venus Core Pool Comptroller/Unitroller address and confirm the live contract is callable.
 - Deploy to a stable public HTTPS endpoint and test from outside the host.
 - Register ERC-8004 and publish verified registry ID and chain.
 - Confirm the marketplace accepts the card/API format and publish the listing.
