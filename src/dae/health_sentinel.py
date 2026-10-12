@@ -6,6 +6,7 @@ from typing import Any
 
 BSC_CHAIN_ID = 56
 DEFAULT_RPC_URL = "https://bsc-dataseed.binance.org"
+VENUS_CORE_POOL_COMPTROLLER = "0xfD36E2c2a6789Db23113685031d7F16329158384"
 GET_ACCOUNT_LIQUIDITY_SELECTOR = "5ec88c79"
 _ADDRESS_RE = re.compile(r"^0x[0-9a-fA-F]{40}$")
 
@@ -55,7 +56,7 @@ def monitor_account(account: str, *, rpc_url: str | None = None,
     """Return Venus liquidity buffer/shortfall; this is not an exact HF ratio."""
     account = validate_address(account)
     rpc_url = rpc_url or os.getenv("BSC_RPC_URL", DEFAULT_RPC_URL)
-    comptroller_address = comptroller_address or os.getenv("VENUS_COMPTROLLER_ADDRESS", "")
+    comptroller_address = comptroller_address or os.getenv("VENUS_COMPTROLLER_ADDRESS", VENUS_CORE_POOL_COMPTROLLER)
     if not _ADDRESS_RE.fullmatch(comptroller_address):
         raise SentinelError("Set VENUS_COMPTROLLER_ADDRESS to a verified Venus Core Pool Comptroller/Unitroller address.")
     if critical_liquidity_usd < 0 or warning_liquidity_usd < critical_liquidity_usd:
