@@ -2,7 +2,7 @@
 
 **DAE is a safety-first, local-first opportunity research and agent-economics prototype.** It combines a deterministic simulation core with read-only public GitHub issue discovery, transparent triage, and search links for other public opportunity ecosystems.
 
-> **Current status:** release candidate / research MVP, not a production SaaS. Reward claims are not independently verified. No guaranteed income, autonomous work acceptance, client contact, task execution, wallet signing, payment, or spending is performed.
+> **Current status:** release candidate / research MVP, not a production SaaS. Reward claims are not independently verified. No guaranteed income, autonomous work acceptance, client contact, third-party code execution, task submission, wallet signing, payment, or spending is performed.
 
 ## Quick start — Windows
 
