@@ -2,7 +2,7 @@
 
 **DAE is a safety-first, local-first opportunity research and agent-economics prototype.** It combines a deterministic simulation core with read-only public GitHub issue discovery, transparent triage, and search links for other public opportunity ecosystems.
 
-> **Current status:** release candidate / research MVP, not a production SaaS. Reward claims are not independently verified. No guaranteed income, autonomous work acceptance, client contact, task execution, wallet signing, payment, or spending is performed.
+> **Current status:** release candidate / research MVP, not a production SaaS. Reward claims are not independently verified. No guaranteed income, autonomous work acceptance, client contact, third-party code execution, task submission, wallet signing, payment, or spending is performed.
 
 ## Quick start — Windows
 
@@ -36,6 +36,7 @@ dae demo
 - `src/dae/`: deterministic task scoring, policy gates, economic simulation and human-reviewed evolution decisions.
 - `scripts/dae_hourly_scan.py`: GET-only search of public GitHub Issues. It creates candidate leads and never accepts or submits a task.
 - `scripts/dae_opportunity_advisor.py`: triage report based on scanner output. It does not independently verify funders, payout terms, or win probability.
+- `scripts/dae_task_worker.py`: bounded local worker that materializes reviewed task manifests, checks for empty files/obvious secrets, records hashes, and packages a submission bundle. See [Task Worker Workbench](docs/TASK_WORKER.md).
 - `scripts/dae_external_source_discovery.py`: generates search links for X, Binance Square via public web search, and broader bounty/grant/hackathon searches. These are **search links, not live crawlers or verified opportunities**.
 - `reports/`: generated local reports; reports are not committed by default.
 
