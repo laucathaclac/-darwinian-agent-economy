@@ -15,7 +15,7 @@ from urllib.parse import urlparse
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from dae.healthguard import assess_json  # noqa: E402
 
-PUBLIC_URL = os.getenv("DAE_PUBLIC_URL", "http://127.0.0.1:8788").rstrip("/")
+PUBLIC_URL = (os.getenv("DAE_PUBLIC_URL") or os.getenv("RENDER_EXTERNAL_URL") or "http://127.0.0.1:8788").rstrip("/")
 MAX_BODY_BYTES = 16_384
 AGENT_CARD = {
     "name": "DAE HealthGuard",
@@ -103,7 +103,8 @@ class Handler(BaseHTTPRequestHandler):
 
 def main() -> None:
     host = os.getenv("DAE_HOST", "127.0.0.1")
-    port = int(os.getenv("DAE_PORT", "8788"))
+    # Render supplies PORT; local CMD uses 8788 by default.
+    port = int(os.getenv("PORT") or os.getenv("DAE_PORT", "8788"))
     server = ThreadingHTTPServer((host, port), Handler)
     print(f"DAE HealthGuard API listening on http://{host}:{port}")
     print("Endpoints: GET /health, GET /.well-known/agent-card.json, POST /v1/assess")
