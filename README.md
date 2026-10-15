@@ -75,3 +75,16 @@ py -3 -m dae.cli demo
 ```
 
 No paid APIs or third-party Python runtime packages are required by the current scanner scripts. Public endpoints may rate-limit or change; failures should be treated as incomplete discovery, not as proof that no opportunities exist.
+
+
+## DAE HealthGuard (new local MVP)
+
+A deterministic health-factor assessment core is available in this branch. It currently works on normalized JSON fixtures and is **not yet connected to live BNB Chain data or a lending protocol**.
+
+Windows quickstart:
+```bat
+py -3 -m unittest discover -s tests -v
+py -3 scripts\dae_healthguard.py examples\healthguard_position.json
+```
+
+Read [HealthGuard operations and limitations](docs/HEALTHGUARD.md) and [DAE 2.0 handover gates](docs/DAE_2_HANDOVER.md). Do not interpret the sample fixture as live chain data, or the assessment output as an executed transaction.
