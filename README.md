@@ -40,6 +40,17 @@ dae demo
 - `scripts/dae_external_source_discovery.py`: generates search links for X, Binance Square via public web search, and broader bounty/grant/hackathon searches. These are **search links, not live crawlers or verified opportunities**.
 - `reports/`: generated local reports; reports are not committed by default.
 
+### BNB Chain testnet connectivity (read-only)
+
+The HealthGuard branch includes a public-RPC connectivity check pinned to BSC Testnet (chain ID 97). It reads the chain ID and latest block, and optionally a public address's native tBNB balance. It does not use a wallet, private key, signing, or transaction broadcast.
+
+```bat
+py -3 scripts\\dae_bnb_testnet_check.py
+py -3 scripts\\dae_bnb_testnet_check.py --address 0xYOUR_PUBLIC_TESTNET_ADDRESS
+```
+
+This proves only RPC connectivity and public chain reads; it is not a live lending-position adapter or proof of ERC-8004 registration, marketplace listing, hires, or paid work. See [testnet integration notes](docs/BNB_TESTNET_READONLY.md).
+
 ## Interpreting results
 
 - `UNVERIFIED` means there is no independent proof that a reward is funded.
