@@ -40,6 +40,21 @@ dae demo
 - `scripts/dae_external_source_discovery.py`: generates search links for X, Binance Square via public web search, and broader bounty/grant/hackathon searches. These are **search links, not live crawlers or verified opportunities**.
 - `reports/`: generated local reports; reports are not committed by default.
 
+### BNB Chain testnet connectivity (read-only)
+
+The HealthGuard branch includes a public-RPC connectivity check pinned to BSC Testnet (chain ID 97). It reads the chain ID and latest block, and optionally a public address's native tBNB balance. It does not use a wallet, private key, signing, or transaction broadcast.
+
+```bat
+py -3 scripts\\dae_bnb_testnet_check.py
+py -3 scripts\\dae_bnb_testnet_check.py --address 0xYOUR_PUBLIC_TESTNET_ADDRESS
+```
+
+This proves only RPC connectivity and public chain reads; it is not a live lending-position adapter or proof of ERC-8004 registration, marketplace listing, hires, or paid work. See [testnet integration notes](docs/BNB_TESTNET_READONLY.md).
+
+### Free hosting blueprint
+
+A Render Blueprint is included at `render.yaml` for a free web service. It serves the local-first HealthGuard API and exposes `/health` for the host's health check. The free instance may sleep when idle, and the service only evaluates caller-supplied snapshots; it is not a live lending monitor. See [Render deployment guide](docs/DEPLOY_RENDER.md). Deployment still requires the repository owner to connect their Render account and authorize the service.
+
 ## Interpreting results
 
 - `UNVERIFIED` means there is no independent proof that a reward is funded.
@@ -75,3 +90,16 @@ py -3 -m dae.cli demo
 ```
 
 No paid APIs or third-party Python runtime packages are required by the current scanner scripts. Public endpoints may rate-limit or change; failures should be treated as incomplete discovery, not as proof that no opportunities exist.
+
+
+## DAE HealthGuard (new local MVP)
+
+A deterministic health-factor assessment core is available in this branch. It currently works on normalized JSON fixtures and is **not yet connected to live BNB Chain data or a lending protocol**.
+
+Windows quickstart:
+```bat
+py -3 -m unittest discover -s tests -v
+py -3 scripts\dae_healthguard.py examples\healthguard_position.json
+```
+
+Read [HealthGuard operations and limitations](docs/HEALTHGUARD.md) and [DAE 2.0 handover gates](docs/DAE_2_HANDOVER.md). Do not interpret the sample fixture as live chain data, or the assessment output as an executed transaction.

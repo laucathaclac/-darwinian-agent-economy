@@ -1,0 +1,15 @@
+{
+  "position": {
+    "collateral_value": 1000.0,
+    "debt_value": 500.0,
+    "liquidation_threshold": 0.8,
+    "observed_at": "2026-10-15T11:59:00+00:00",
+    "source": "DEMO FIXTURE — NOT LIVE CHAIN DATA"
+  },
+  "policy": {
+    "urgent_below": 1.05,
+    "critical_below": 1.15,
+    "warning_below": 1.35,
+    "max_snapshot_age_seconds": 300
+  }
+}

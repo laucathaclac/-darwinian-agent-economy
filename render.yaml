@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: dae-healthguard
+    runtime: python
+    plan: free
+    branch: feat/healthguard-agent-mvp
+    buildCommand: python -m pip install -e .
+    startCommand: python scripts/dae_healthguard_server.py
+    healthCheckPath: /health
+    envVars:
+      - key: DAE_HOST
+        value: 0.0.0.0
+      - key: PYTHON_VERSION
+        value: 3.12.7
