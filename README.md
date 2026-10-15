@@ -51,6 +51,10 @@ py -3 scripts\\dae_bnb_testnet_check.py --address 0xYOUR_PUBLIC_TESTNET_ADDRESS
 
 This proves only RPC connectivity and public chain reads; it is not a live lending-position adapter or proof of ERC-8004 registration, marketplace listing, hires, or paid work. See [testnet integration notes](docs/BNB_TESTNET_READONLY.md).
 
+### Free hosting blueprint
+
+A Render Blueprint is included at `render.yaml` for a free web service. It serves the local-first HealthGuard API and exposes `/health` for the host's health check. The free instance may sleep when idle, and the service only evaluates caller-supplied snapshots; it is not a live lending monitor. See [Render deployment guide](docs/DEPLOY_RENDER.md). Deployment still requires the repository owner to connect their Render account and authorize the service.
+
 ## Interpreting results
 
 - `UNVERIFIED` means there is no independent proof that a reward is funded.
